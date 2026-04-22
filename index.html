@@ -1,1 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kamikaze Innovations – IoT Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1a6fc4;
+    --blue-dark: #0f4d8f;
+    --blue-light: #2e8fe8;
+    --blue-glow: rgba(26,111,196,0.35);
+    --white: #ffffff;
+    --off-white: #f0f6ff;
+    --gray: #8aa8cc;
+    --text: #0a1f3d;
+    --border: rgba(26,111,196,0.22);
+  }
 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Exo 2', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 30px rgba(26,111,196,0.15); }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo img { height: 42px; width: auto; }
+  .nav-logo-text {
+    font-size: 1.1rem; font-weight: 900;
+    color: var(--blue-dark);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .nav-logo-text span { color: var(--blue-light); display: block; font-weight: 400; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  .nav-links { display: flex; gap: 2px; list-style: none; }
+  .nav-links a {
+    padding: 8px 16px; text-decoration: none;
+    font-size: 0.88rem; font-weight: 600; letter-spacing: 0.04em;
+    color: var(--text); border-radius: 8px;
+    transition: background .2s, color .2s;
+    position: relative;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    background: var(--blue); color: var(--white);
+  }
+  .nav-cta {
+    background: var(--blue); color: var(--white) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 14px var(--blue-glow);
+  }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+  .hamburger span { width: 24px; height: 2px; background: var(--blue); border-radius: 2px; transition: .3s; }
+
+  /* ─── PAGES ─── */
+  .page { display: none; padding-top: 70px; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: calc(100vh - 70px);
+    background: linear-gradient(135deg, #0a1f3d 0%, #0f4d8f 45%, #1a6fc4 100%);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridDrift 20s linear infinite;
+  }
+  @keyframes gridDrift { from { transform: translateY(0); } to { transform: translateY(60px); } }
+
+  .hero-orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: 0.4;
+    animation: pulse 6s ease-in-out infinite;
+  }
+  .hero-orb-1 { width: 500px; height: 500px; background: var(--blue-light); top: -100px; right: -100px; }
+  .hero-orb-2 { width: 300px; height: 300px; background: #4eb8ff; bottom: 10%; left: 5%; animation-delay: -3s; }
+  @keyframes pulse { 0%,100% { transform: scale(1); opacity: 0.4; } 50% { transform: scale(1.1); opacity: 0.6; } }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 1200px; margin: 0 auto; padding: 80px 5%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    color: #7dd3fc; padding: 6px 14px; border-radius: 20px;
+    font-size: 0.75rem; font-family: 'Space Mono', monospace;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: #4ade80; border-radius: 50%; animation: blink 1.5s infinite; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900; color: var(--white); line-height: 1.1;
+    margin-bottom: 20px; letter-spacing: -0.03em;
+  }
+  .hero h1 em { font-style: normal; color: #7dd3fc; }
+
+  .hero p {
+    font-size: 1.1rem; color: rgba(255,255,255,0.75);
+    line-height: 1.8; margin-bottom: 36px; font-weight: 300;
+  }
+
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--white); color: var(--blue-dark);
+    padding: 14px 28px; border-radius: 10px; border: none;
+    font-family: 'Exo 2', sans-serif; font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 14px 28px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.35);
+    font-family: 'Exo 2', sans-serif; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: border-color .2s, background .2s;
+  }
+  .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+  .hero-visual {
+    position: relative; display: flex; justify-content: center; align-items: center;
+  }
+  .hero-device {
+    width: 320px; height: 320px; border-radius: 30px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+    gap: 16px; padding: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+  .device-card {
+    background: rgba(255,255,255,0.1); border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    font-size: 0.7rem; color: rgba(255,255,255,0.8); font-family: 'Space Mono', monospace;
+    transition: background .3s;
+  }
+  .device-card:hover { background: rgba(255,255,255,0.2); }
+  .device-card .icon { font-size: 1.8rem; }
+  .device-card .value { font-size: 1.1rem; font-weight: 700; color: #7dd3fc; }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 48px; padding-top: 36px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat-item { }
+  .stat-num { font-size: 2rem; font-weight: 900; color: var(--white); letter-spacing: -0.03em; }
+  .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* ─── SECTIONS ─── */
+  .section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+  .section-full { padding: 100px 5%; background: var(--off-white); }
+  .section-full-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-tag {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    color: var(--blue); text-transform: uppercase; letter-spacing: 0.2em;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-tag::before { content: ''; width: 30px; height: 2px; background: var(--blue); }
+
+  h2.section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900;
+    color: var(--text); letter-spacing: -0.03em; line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  h2.section-title em { font-style: normal; color: var(--blue); }
+  .section-subtitle { font-size: 1.05rem; color: #4a6a8c; line-height: 1.75; max-width: 600px; }
+
+  /* ─── FEATURES ─── */
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+  .feature-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 18px; padding: 32px;
+    transition: transform .3s, box-shadow .3s, border-color .3s;
+    position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-light));
+    transform: scaleX(0); transform-origin: left; transition: transform .3s;
+  }
+  .feature-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px var(--blue-glow); border-color: var(--blue); }
+  .feature-card:hover::before { transform: scaleX(1); }
+  .feature-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 20px;
+    box-shadow: 0 8px 20px var(--blue-glow);
+  }
+  .feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+  .feature-card p { font-size: 0.88rem; color: #4a6a8c; line-height: 1.7; }
+
+  /* ─── SERVICES PAGE ─── */
+  .services-hero {
+    background: linear-gradient(135deg, #0a1f3d 0%, #1a6fc4 100%);
+    padding: 80px 5%; text-align: center; position: relative; overflow: hidden;
+  }
+  .services-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .services-hero h1 { position: relative; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: var(--white); }
+  .services-hero p { position: relative; color: rgba(255,255,255,0.7); margin-top: 16px; font-size: 1.05rem; }
+
+  .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-top: 60px; }
+  .service-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 20px; overflow: hidden;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .service-card:hover { transform: translateY(-5px); box-shadow: 0 24px 60px var(--blue-glow); }
+  .service-card-header {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+    padding: 32px; display: flex; align-items: center; gap: 18px;
+  }
+  .service-card-header .s-icon {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center; font-size: 2rem;
+    flex-shrink: 0;
+  }
+  .service-card-header h3 { color: var(--white); font-size: 1.2rem; font-weight: 700; }
+  .service-card-header p { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 4px; }
+  .service-card-body { padding: 28px; }
+  .service-features { list-style: none; }
+  .service-features li {
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+    font-size: 0.88rem; color: #4a6a8c;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .service-features li:last-child { border: none; }
+  .service-features li::before { content: '→'; color: var(--blue); font-weight: 700; }
+  .service-price {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);
+  }
+  .price-tag { font-size: 1.5rem; font-weight: 900; color: var(--blue-dark); }
+  .price-tag span { font-size: 0.8rem; font-weight: 400; color: #4a6a8c; }
+
+  .btn-blue {
+    background: var(--blue); color: var(--white);
+    padding: 10px 22px; border-radius: 8px; border: none;
+    font-family: 'Exo 2', sans-serif; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    transition: background .2s, transform .2s;
+  }
+  .btn-blue:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+  /* ─── ABOUT PAGE ─── */
+  .about-hero {
+    background: linear-gradient(135deg, #0a1f3d 0%, #1a6fc4 100%);
+    padding: 80px 5% 120px; position: relative; overflow: hidden;
+  }
+  .about-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 70% 50%, rgba(78,184,255,0.18) 0%, transparent 60%);
+  }
+  .about-hero-inner { position: relative; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .about-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--white); line-height: 1.1; }
+  .about-hero p { color: rgba(255,255,255,0.75); margin-top: 16px; font-size: 1rem; line-height: 1.8; }
+  .about-hero-img {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 24px; padding: 36px; text-align: center;
+  }
+  .about-hero-img .big-icon { font-size: 6rem; }
+  .about-hero-img p { color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-top: 12px; font-family: 'Space Mono', monospace; }
+
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  .team-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 18px;
+    padding: 32px; text-align: center;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .team-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px var(--blue-glow); }
+  .team-avatar {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    margin: 0 auto 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; border: 3px solid var(--off-white);
+    box-shadow: 0 8px 20px var(--blue-glow);
+  }
+  .team-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); }
+  .team-card .role { font-size: 0.8rem; color: var(--blue); font-family: 'Space Mono', monospace; margin: 4px 0 12px; }
+  .team-card p { font-size: 0.84rem; color: #4a6a8c; line-height: 1.6; }
+
+  .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 56px; }
+  .value-card {
+    padding: 28px 20px; border-radius: 16px; text-align: center;
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+    color: var(--white);
+    transition: transform .3s;
+  }
+  .value-card:hover { transform: translateY(-4px); }
+  .value-card .icon { font-size: 2.2rem; margin-bottom: 14px; }
+  .value-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .value-card p { font-size: 0.8rem; opacity: 0.8; line-height: 1.6; }
+
+  /* ─── BLOG PAGE ─── */
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+  .blog-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 18px; overflow: hidden;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .blog-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px var(--blue-glow); }
+  .blog-img {
+    height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; position: relative; overflow: hidden;
+  }
+  .blog-img-1 { background: linear-gradient(135deg, #0a1f3d, #1a6fc4); }
+  .blog-img-2 { background: linear-gradient(135deg, #0f4d8f, #2e8fe8); }
+  .blog-img-3 { background: linear-gradient(135deg, #1a6fc4, #4eb8ff); }
+  .blog-img-4 { background: linear-gradient(135deg, #0a2a5e, #1a6fc4); }
+  .blog-img-5 { background: linear-gradient(135deg, #0f3d73, #2e8fe8); }
+  .blog-img-6 { background: linear-gradient(135deg, #162d50, #1a6fc4); }
+
+  .blog-body { padding: 24px; }
+  .blog-meta {
+    display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .blog-tag {
+    font-size: 0.7rem; font-family: 'Space Mono', monospace;
+    background: rgba(26,111,196,0.1); color: var(--blue);
+    padding: 3px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .blog-date { font-size: 0.75rem; color: var(--gray); }
+  .blog-card h3 { font-size: 1rem; font-weight: 700; line-height: 1.4; margin-bottom: 10px; }
+  .blog-card p { font-size: 0.84rem; color: #4a6a8c; line-height: 1.65; margin-bottom: 18px; }
+  .blog-author { display: flex; align-items: center; gap: 10px; }
+  .blog-author-img { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--blue-light)); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .blog-author span { font-size: 0.78rem; color: #4a6a8c; }
+  .read-more { font-size: 0.8rem; font-weight: 700; color: var(--blue); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+  .read-more:hover { color: var(--blue-dark); }
+
+  /* ─── CONTACT PAGE ─── */
+  .contact-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; margin-top: 60px; align-items: start; }
+  .contact-info { }
+  .contact-item {
+    display: flex; gap: 18px; margin-bottom: 32px;
+  }
+  .contact-icon {
+    width: 50px; height: 50px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0;
+    box-shadow: 0 6px 18px var(--blue-glow);
+  }
+  .contact-item h4 { font-size: 0.85rem; font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); margin-bottom: 4px; }
+  .contact-item p { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+  .contact-item small { font-size: 0.8rem; color: #4a6a8c; }
+
+  .map-placeholder {
+    background: linear-gradient(135deg, #0a1f3d, #1a6fc4);
+    border-radius: 18px; height: 200px; margin-top: 32px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; position: relative; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .map-placeholder::after {
+    content: 'Cape Town, South Africa'; position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+    color: rgba(255,255,255,0.6); font-size: 0.75rem; font-family: 'Space Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .contact-form {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 20px; padding: 40px;
+    box-shadow: 0 10px 40px rgba(26,111,196,0.08);
+  }
+  .contact-form h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 28px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text); margin-bottom: 7px; letter-spacing: 0.03em; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 12px 16px; border-radius: 10px;
+    border: 1.5px solid var(--border); background: var(--off-white);
+    font-family: 'Exo 2', sans-serif; font-size: 0.9rem; color: var(--text);
+    transition: border-color .2s, box-shadow .2s; outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,111,196,0.12);
+  }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    width: 100%; padding: 14px; background: var(--blue); color: var(--white);
+    border: none; border-radius: 10px; font-family: 'Exo 2', sans-serif;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    transition: background .2s, transform .2s;
+    box-shadow: 0 8px 24px var(--blue-glow);
+    letter-spacing: 0.04em;
+  }
+  .form-submit:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+  /* ─── CTA BANNER ─── */
+  .cta-banner {
+    background: linear-gradient(135deg, #0a1f3d 0%, #1a6fc4 100%);
+    padding: 80px 5%; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-banner::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(78,184,255,0.2) 0%, transparent 50%),
+      radial-gradient(circle at 80% 50%, rgba(26,111,196,0.3) 0%, transparent 50%);
+  }
+  .cta-banner > * { position: relative; }
+  .cta-banner h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--white); font-weight: 900; }
+  .cta-banner p { color: rgba(255,255,255,0.7); margin: 16px auto 32px; max-width: 500px; line-height: 1.7; }
+  .cta-banner-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  .testimonial-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 18px; padding: 32px;
+    transition: transform .3s, box-shadow .3s;
+    position: relative;
+  }
+  .testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px var(--blue-glow); }
+  .testimonial-card::before { content: '"'; position: absolute; top: 16px; right: 24px; font-size: 5rem; color: var(--blue); opacity: 0.15; font-family: Georgia, serif; line-height: 1; }
+  .stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 16px; }
+  .testimonial-card p { font-size: 0.9rem; color: #4a6a8c; line-height: 1.75; margin-bottom: 20px; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--blue-light)); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .author-name { font-size: 0.88rem; font-weight: 700; color: var(--text); }
+  .author-co { font-size: 0.75rem; color: var(--gray); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #07172e; color: rgba(255,255,255,0.65);
+    padding: 70px 5% 30px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; }
+  .footer-brand img { height: 44px; margin-bottom: 16px; }
+  .footer-brand p { font-size: 0.85rem; line-height: 1.75; max-width: 280px; }
+  .footer-col h4 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--white); margin-bottom: 18px; font-family: 'Space Mono', monospace; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { font-size: 0.85rem; color: rgba(255,255,255,0.55); text-decoration: none; transition: color .2s; cursor: pointer; }
+  .footer-col ul li a:hover { color: var(--blue-light); }
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 60px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.8rem; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom a { color: rgba(255,255,255,0.55); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--blue-light); }
+
+  .social-links { display: flex; gap: 10px; margin-top: 20px; }
+  .social-link {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    text-decoration: none; transition: background .2s;
+  }
+  .social-link:hover { background: var(--blue); }
+
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    background: var(--off-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 40px 5%;
+  }
+  .stats-bar-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stat-box { text-align: center; }
+  .stat-box .num { font-size: 2.4rem; font-weight: 900; color: var(--blue-dark); letter-spacing: -0.04em; }
+  .stat-box .lbl { font-size: 0.8rem; color: #4a6a8c; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 4px; }
+
+  /* ─── TECH STACK ─── */
+  .tech-stack {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; justify-content: center;
+  }
+  .tech-pill {
+    background: var(--white); border: 1.5px solid var(--border);
+    color: var(--text); padding: 8px 18px; border-radius: 30px;
+    font-size: 0.82rem; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+    transition: border-color .2s, color .2s;
+  }
+  .tech-pill:hover { border-color: var(--blue); color: var(--blue); }
+  .tech-pill span { font-size: 1rem; }
+
+  /* ─── PROCESS ─── */
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 56px; position: relative; }
+  .process-steps::before {
+    content: ''; position: absolute; top: 34px; left: 8%; right: 8%; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-light));
+    z-index: 0;
+  }
+  .process-step { text-align: center; position: relative; z-index: 1; }
+  .step-num {
+    width: 68px; height: 68px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+    color: var(--white); font-size: 1.2rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; border: 4px solid var(--white);
+    box-shadow: 0 8px 24px var(--blue-glow);
+    font-family: 'Space Mono', monospace;
+  }
+  .process-step h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+  .process-step p { font-size: 0.82rem; color: #4a6a8c; line-height: 1.65; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .values-grid { grid-template-columns: 1fr 1fr; }
+    .blog-grid { grid-template-columns: 1fr 1fr; }
+    .contact-layout { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .stats-bar-inner { grid-template-columns: 1fr 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-steps::before { display: none; }
+    .about-hero-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .features-grid, .blog-grid, .team-grid, .values-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── MOBILE MENU ─── */
+  .mobile-menu {
+    display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 999;
+    background: var(--white); border-bottom: 1px solid var(--border);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    padding: 20px 5%; flex-direction: column; gap: 4px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    padding: 12px 16px; border-radius: 10px; text-decoration: none;
+    color: var(--text); font-weight: 600; font-size: 0.95rem;
+    transition: background .2s;
+  }
+  .mobile-menu a:hover, .mobile-menu a.active { background: var(--blue); color: var(--white); }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── NOTIFICATION TOAST ─── */
+  .toast {
+    position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+    background: var(--blue); color: var(--white); padding: 14px 22px;
+    border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+    box-shadow: 0 10px 30px var(--blue-glow);
+    transform: translateY(80px); opacity: 0;
+    transition: transform .4s, opacity .4s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a class="nav-logo" href="#" onclick="showPage('home')">
+    <img src="/mnt/user-data/uploads/cropped-kamikaze-innovations-icon.png" alt="Kamikaze Innovations Logo">
+    <div class="nav-logo-text">Kamikaze Innovations<span>IoT Solutions Provider</span></div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a href="#" onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a href="#" onclick="showPage('services')" id="nav-services">Services</a></li>
+    <li><a href="#" onclick="showPage('blog')" id="nav-blog">Blog</a></li>
+    <li><a href="#" onclick="showPage('contact')" id="nav-contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="showPage('home');toggleMenu()" id="mnav-home">Home</a>
+  <a href="#" onclick="showPage('about');toggleMenu()" id="mnav-about">About</a>
+  <a href="#" onclick="showPage('services');toggleMenu()" id="mnav-services">Services</a>
+  <a href="#" onclick="showPage('blog');toggleMenu()" id="mnav-blog">Blog</a>
+  <a href="#" onclick="showPage('contact');toggleMenu()" id="mnav-contact">Contact Us</a>
+</div>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║            HOME PAGE                ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-badge">Live IoT Systems Active</div>
+        <h1>Connecting the <em>Physical World</em> to the Digital Future</h1>
+        <p>Kamikaze Innovations delivers end-to-end IoT solutions — from smart sensors to enterprise cloud platforms. We transform your infrastructure into an intelligent, data-driven ecosystem.</p>
+        <div class="hero-btns">
+          <a href="#" class="btn-primary" onclick="showPage('services')">Explore Services ↗</a>
+          <a href="#" class="btn-outline" onclick="showPage('contact')">Get a Free Consultation</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Devices Deployed</div></div>
+          <div class="stat-item"><div class="stat-num">98.7%</div><div class="stat-label">Uptime SLA</div></div>
+          <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Enterprise Clients</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-device">
+          <div class="device-card"><span class="icon">🌡️</span><div class="value">23.4°C</div><div>Temp Sensor</div></div>
+          <div class="device-card"><span class="icon">💧</span><div class="value">67%</div><div>Humidity</div></div>
+          <div class="device-card"><span class="icon">⚡</span><div class="value">4.2kW</div><div>Power</div></div>
+          <div class="device-card"><span class="icon">📡</span><div class="value">Online</div><div>Network</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-bar-inner">
+      <div class="stat-box"><div class="num">12+</div><div class="lbl">Years Experience</div></div>
+      <div class="stat-box"><div class="num">500+</div><div class="lbl">IoT Deployments</div></div>
+      <div class="stat-box"><div class="num">50+</div><div class="lbl">Enterprise Clients</div></div>
+      <div class="stat-box"><div class="num">15M+</div><div class="lbl">Data Points/Day</div></div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section fade-up">
+    <div class="section-tag">What We Offer</div>
+    <h2 class="section-title">Built for the <em>Smart Enterprise</em></h2>
+    <p class="section-subtitle">Our platform delivers real-time visibility, predictive intelligence, and seamless control across your entire connected infrastructure.</p>
+
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📡</div>
+        <h3>Real-Time Monitoring</h3>
+        <p>Monitor thousands of sensors and devices simultaneously. Get instant alerts, live dashboards, and full visibility into your operational environment 24/7.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🤖</div>
+        <h3>AI-Powered Analytics</h3>
+        <p>Machine learning models that detect anomalies, predict failures, and surface actionable insights from your IoT data streams before issues arise.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🔒</div>
+        <h3>Enterprise Security</h3>
+        <p>Military-grade encryption, zero-trust architecture, and continuous threat monitoring protect every node in your connected network from edge to cloud.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">☁️</div>
+        <h3>Cloud Integration</h3>
+        <p>Seamless integration with AWS, Azure, and Google Cloud. Deploy hybrid or fully cloud-native IoT infrastructure with auto-scaling capabilities.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">⚙️</div>
+        <h3>Device Management</h3>
+        <p>Provision, update, and manage your entire device fleet remotely. Over-the-air firmware updates keep every endpoint current and secure.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📊</div>
+        <h3>Custom Dashboards</h3>
+        <p>Build tailored operational dashboards with drag-and-drop widgets. Share live data views across teams with role-based access control.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="section-full">
+    <div class="section-full-inner fade-up">
+      <div class="section-tag">How It Works</div>
+      <h2 class="section-title">From Concept to <em>Connected Reality</em></h2>
+      <p class="section-subtitle">Our proven 4-step methodology ensures every IoT project launches on time, on budget, and exceeds performance expectations.</p>
+      <div class="process-steps">
+        <div class="process-step fade-up">
+          <div class="step-num">01</div>
+          <h3>Discovery & Design</h3>
+          <p>We audit your infrastructure, define KPIs, and architect a custom IoT solution aligned to your business goals and technical environment.</p>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-num">02</div>
+          <h3>Hardware Deployment</h3>
+          <p>Our engineers install and configure sensors, gateways, and edge devices across your facilities with minimal operational disruption.</p>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-num">03</div>
+          <h3>Platform Integration</h3>
+          <p>Connect your devices to our cloud platform, integrate with existing systems, and configure data pipelines and automated workflows.</p>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-num">04</div>
+          <h3>Monitor & Optimize</h3>
+          <p>Continuous monitoring, proactive maintenance, and quarterly performance reviews ensure your IoT ecosystem keeps delivering ROI.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section fade-up">
+    <div class="section-tag">Client Stories</div>
+    <h2 class="section-title">Trusted by <em>Industry Leaders</em></h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p>Kamikaze Innovations transformed our manufacturing floor. Real-time equipment monitoring cut downtime by 43% in the first quarter alone. Exceptional team and technology.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">👨‍💼</div>
+          <div><div class="author-name">James Hendricks</div><div class="author-co">VP Operations, NovaStar Manufacturing</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p>The smart building solution they deployed reduced our energy consumption by 31%. The ROI was evident within 6 months. Highly professional from start to finish.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">👩‍💼</div>
+          <div><div class="author-name">Priya Naidoo</div><div class="author-co">Facilities Director, Pinnacle Properties</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p>Their fleet tracking system gave us complete visibility overnight. Driver safety improved, fuel costs dropped 18%, and clients love the live delivery updates.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">👨‍💻</div>
+          <div><div class="author-name">Sipho Dlamini</div><div class="author-co">CTO, SwiftRoute Logistics</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <h2>Ready to Innovate Your Operations?</h2>
+    <p>Join 50+ enterprises already running smarter with Kamikaze Innovations' IoT platform. Start with a free consultation.</p>
+    <div class="cta-banner-btns">
+      <a href="#" class="btn-primary" onclick="showPage('contact')">Book Free Consultation →</a>
+      <a href="#" class="btn-outline" onclick="showPage('services')">View All Services</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="/mnt/user-data/uploads/cropped-kamikaze-innovations-icon.png" alt="Logo">
+          <p>Kamikaze Innovations is a leading IoT solutions provider, connecting enterprises to the future of intelligent operations since 2012.</p>
+          <div class="social-links">
+            <a class="social-link" href="#">🐦</a>
+            <a class="social-link" href="#">💼</a>
+            <a class="social-link" href="#">📘</a>
+            <a class="social-link" href="#">📺</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Solutions</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('services')">Smart Buildings</a></li>
+            <li><a href="#" onclick="showPage('services')">Industrial IoT</a></li>
+            <li><a href="#" onclick="showPage('services')">Fleet Tracking</a></li>
+            <li><a href="#" onclick="showPage('services')">Energy Management</a></li>
+            <li><a href="#" onclick="showPage('services')">Healthcare IoT</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('about')">About Us</a></li>
+            <li><a href="#" onclick="showPage('blog')">Blog</a></li>
+            <li><a href="#" onclick="showPage('contact')">Careers</a></li>
+            <li><a href="#" onclick="showPage('contact')">Partners</a></li>
+            <li><a href="#" onclick="showPage('contact')">Press</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">API Reference</a></li>
+            <li><a href="#">Status Page</a></li>
+            <li><a href="#" onclick="showPage('contact')">Contact Support</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Kamikaze Innovations (Pty) Ltd. All rights reserved.</span>
+        <span>Cape Town, South Africa · <a href="mailto:info@kamikazeinnovations.co.za">info@kamikazeinnovations.co.za</a></span>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- end home -->
+
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║            ABOUT PAGE               ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<div id="page-about" class="page">
+
+  <div class="about-hero">
+    <div class="about-hero-inner">
+      <div>
+        <div class="hero-badge">About Us</div>
+        <h1>Engineering the Connected Future Since 2012</h1>
+        <p>We are a Cape Town-based IoT solutions company with a global footprint. Kamikaze Innovations was born from a bold vision: make powerful connected technology accessible, reliable, and transformative for every industry.</p>
+        <div class="hero-btns" style="margin-top:28px;">
+          <a href="#" class="btn-primary" onclick="showPage('contact')">Work With Us →</a>
+          <a href="#" class="btn-outline" onclick="showPage('services')">Our Services</a>
+        </div>
+      </div>
+      <div class="about-hero-img">
+        <div class="big-icon">🌐</div>
+        <p>// GLOBAL IOT NETWORK ACTIVE</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MISSION -->
+  <div class="section fade-up">
+    <div class="section-tag">Our Mission</div>
+    <h2 class="section-title">Driven by <em>Purpose</em>, Built on Technology</h2>
+    <p class="section-subtitle">Our mission is to empower organisations with intelligent connected solutions that eliminate inefficiency, reduce costs, and unlock entirely new operational capabilities.</p>
+
+    <div class="values-grid" style="margin-top:48px;">
+      <div class="value-card fade-up"><div class="icon">🎯</div><h3>Mission</h3><p>Connect every device, sensor, and system to create smarter, safer operations worldwide.</p></div>
+      <div class="value-card fade-up"><div class="icon">🔭</div><h3>Vision</h3><p>A world where intelligent infrastructure makes every organisation more resilient and efficient.</p></div>
+      <div class="value-card fade-up"><div class="icon">💡</div><h3>Innovation</h3><p>We invest 20% of revenue into R&D to stay at the absolute forefront of IoT technology.</p></div>
+      <div class="value-card fade-up"><div class="icon">🤝</div><h3>Partnership</h3><p>Long-term client relationships built on trust, transparency, and measurable outcomes.</p></div>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <div class="section-full">
+    <div class="section-full-inner fade-up">
+      <div class="section-tag">Our People</div>
+      <h2 class="section-title">Meet the <em>Team</em></h2>
+      <p class="section-subtitle">World-class engineers, data scientists, and business strategists — united by a passion for connected technology.</p>
+      <div class="team-grid">
+        <div class="team-card fade-up">
+          <div class="team-avatar">👨‍💻</div>
+          <h3>Andile Khumalo</h3>
+          <div class="role">CEO & Founder</div>
+          <p>15 years in embedded systems and IoT architecture. Previously led engineering at SAP Africa and holds an MSc in Computer Engineering from UCT.</p>
+        </div>
+        <div class="team-card fade-up">
+          <div class="team-avatar">👩‍🔬</div>
+          <h3>Dr. Zanele Mokoena</h3>
+          <div class="role">Chief Data Scientist</div>
+          <p>PhD in Machine Learning from Stellenbosch. Specialises in time-series anomaly detection and predictive maintenance algorithms for industrial IoT.</p>
+        </div>
+        <div class="team-card fade-up">
+          <div class="team-avatar">👨‍🔧</div>
+          <h3>Ruan van der Berg</h3>
+          <div class="role">Head of Engineering</div>
+          <p>Ex-Bosch IoT specialist with deep expertise in LoRaWAN, MQTT protocols, and large-scale sensor network deployments across Africa and Europe.</p>
+        </div>
+        <div class="team-card fade-up">
+          <div class="team-avatar">👩‍💼</div>
+          <h3>Nomsa Cele</h3>
+          <div class="role">VP of Sales & Partnerships</div>
+          <p>Built enterprise relationships across 12 African countries. Former technology consultant at Deloitte with an MBA from Wits Business School.</p>
+        </div>
+        <div class="team-card fade-up">
+          <div class="team-avatar">👨‍🎨</div>
+          <h3>Tyler Govender</h3>
+          <div class="role">UX & Product Design Lead</div>
+          <p>Designs the dashboards and interfaces that make complex IoT data intuitive. 8 years creating enterprise SaaS products for global clients.</p>
+        </div>
+        <div class="team-card fade-up">
+          <div class="team-avatar">👩‍🔒</div>
+          <h3>Fatima Essop</h3>
+          <div class="role">Head of Cybersecurity</div>
+          <p>CISSP-certified security architect focused on IoT threat modelling, zero-trust implementation, and POPIA compliance for enterprise clients.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section fade-up">
+    <div class="section-tag">Technology</div>
+    <h2 class="section-title">Our <em>Technology Stack</em></h2>
+    <p class="section-subtitle">We build on industry-leading protocols and platforms to ensure maximum reliability, scalability, and interoperability.</p>
+    <div class="tech-stack">
+      <div class="tech-pill"><span>📡</span> MQTT Protocol</div>
+      <div class="tech-pill"><span>🌐</span> LoRaWAN</div>
+      <div class="tech-pill"><span>☁️</span> AWS IoT Core</div>
+      <div class="tech-pill"><span>🔵</span> Azure IoT Hub</div>
+      <div class="tech-pill"><span>🟡</span> Google Cloud IoT</div>
+      <div class="tech-pill"><span>🐳</span> Docker / K8s</div>
+      <div class="tech-pill"><span>🔒</span> TLS 1.3</div>
+      <div class="tech-pill"><span>📊</span> InfluxDB</div>
+      <div class="tech-pill"><span>📈</span> Grafana</div>
+      <div class="tech-pill"><span>🤖</span> TensorFlow</div>
+      <div class="tech-pill"><span>⚡</span> Apache Kafka</div>
+      <div class="tech-pill"><span>🔗</span> REST & GraphQL APIs</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <h2>Ready to Join Our Network?</h2>
+    <p>Whether you're exploring IoT for the first time or scaling an existing deployment, we'd love to hear from you.</p>
+    <div class="cta-banner-btns">
+      <a href="#" class="btn-primary" onclick="showPage('contact')">Get in Touch →</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="/mnt/user-data/uploads/cropped-kamikaze-innovations-icon.png" alt="Logo">
+          <p>Connecting enterprises to the future of intelligent operations since 2012.</p>
+        </div>
+        <div class="footer-col"><h4>Solutions</h4><ul><li><a href="#" onclick="showPage('services')">Smart Buildings</a></li><li><a href="#" onclick="showPage('services')">Industrial IoT</a></li><li><a href="#" onclick="showPage('services')">Fleet Tracking</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="#" onclick="showPage('about')">About Us</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Legal</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">POPIA Compliance</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 Kamikaze Innovations (Pty) Ltd.</span></div>
+    </div>
+  </footer>
+
+</div><!-- end about -->
+
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║           SERVICES PAGE             ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<div id="page-services" class="page">
+
+  <div class="services-hero">
+    <div class="section-tag" style="justify-content:center;color:#7dd3fc;">What We Build</div>
+    <h1>IoT Solutions for Every Industry</h1>
+    <p>From smart factories to intelligent buildings — we deploy end-to-end connected systems tailored to your sector.</p>
+  </div>
+
+  <div class="section fade-up">
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="service-card-header">
+          <div class="s-icon">🏭</div>
+          <div><h3>Industrial IoT</h3><p>Smart manufacturing & predictive maintenance</p></div>
+        </div>
+        <div class="service-card-body">
+          <ul class="service-features">
+            <li>Real-time machine health monitoring</li>
+            <li>Predictive maintenance with ML models</li>
+            <li>OEE (Overall Equipment Effectiveness) tracking</li>
+            <li>Vibration, temperature & pressure sensing</li>
+            <li>SCADA system integration</li>
+            <li>Production line performance dashboards</li>
+          </ul>
+          <div class="service-price">
+            <div class="price-tag">From R8,500<span>/month</span></div>
+            <a href="#" class="btn-blue" onclick="showPage('contact')">Get Quote →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-card-header">
+          <div class="s-icon">🏢</div>
+          <div><h3>Smart Buildings</h3><p>Intelligent facility management systems</p></div>
+        </div>
+        <div class="service-card-body">
+          <ul class="service-features">
+            <li>HVAC optimisation and climate control</li>
+            <li>Occupancy detection and space management</li>
+            <li>Smart lighting and energy management</li>
+            <li>Access control and security integration</li>
+            <li>Water usage monitoring and leak detection</li>
+            <li>BMS integration and reporting</li>
+          </ul>
+          <div class="service-price">
+            <div class="price-tag">From R5,200<span>/month</span></div>
+            <a href="#" class="btn-blue" onclick="showPage('contact')">Get Quote →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-card-header">
+          <div class="s-icon">🚚</div>
+          <div><h3>Fleet & Asset Tracking</h3><p>Real-time visibility across all mobile assets</p></div>
+        </div>
+        <div class="service-card-body">
+          <ul class="service-features">
+            <li>GPS vehicle tracking with geofencing</li>
+            <li>Driver behaviour analytics and scoring</li>
+            <li>Cold chain temperature monitoring</li>
+            <li>Fuel consumption tracking and optimisation</li>
+            <li>Scheduled maintenance reminders</li>
+            <li>Customer delivery notifications</li>
+          </ul>
+          <div class="service-price">
+            <div class="price-tag">From R350<span>/vehicle/month</span></div>
+            <a href="#" class="btn-blue" onclick="showPage('contact')">Get Quote →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-card-header">
+          <div class="s-icon">⚡</div>
+          <div><h3>Energy Management</h3><p>Monitor, analyse & reduce energy consumption</p></div>
+        </div>
+        <div class="service-card-body">
+          <ul class="service-features">
+            <li>Sub-meter electrical monitoring per zone</li>
+            <li>Solar PV and battery storage integration</li>
+            <li>Load shedding response automation</li>
+            <li>Carbon footprint tracking and reporting</li>
+            <li>Tariff optimisation and demand management</li>
+            <li>SANS 10400-XA compliance reporting</li>
+          </ul>
+          <div class="service-price">
+            <div class="price-tag">From R4,800<span>/month</span></div>
+            <a href="#" class="btn-blue" onclick="showPage('contact')">Get Quote →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-card-header">
+          <div class="s-icon">🌾</div>
+          <div><h3>Smart Agriculture</h3><p>Precision farming with connected sensors</p></div>
+        </div>
+        <div class="service-card-body">
+          <ul class="service-features">
+            <li>Soil moisture and nutrient monitoring</li>
+            <li>Automated irrigation control systems</li>
+            <li>Micro-climate weather stations</li>
+            <li>Livestock tracking and health monitoring</li>
+            <li>Drone integration for aerial surveying</li>
+            <li>Yield prediction using AI models</li>
+          </ul>
+          <div class="service-price">
+            <div class="price-tag">From R3,200<span>/month</span></div>
+            <a href="#" class="btn-blue" onclick="showPage('contact')">Get Quote →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-card-header">
+          <div class="s-icon">🏥</div>
+          <div><h3>Healthcare IoT</h3><p>Connected health infrastructure solutions</p></div>
+        </div>
+        <div class="service-card-body">
+          <ul class="service-features">
+            <li>Medical equipment condition monitoring</li>
+            <li>Cold storage and pharmacy temperature tracking</li>
+            <li>Nurse call and patient location systems</li>
+            <li>Hand hygiene compliance monitoring</li>
+            <li>Oxygen and gas flow monitoring</li>
+            <li>HIPAA-compliant data architecture</li>
+          </ul>
+          <div class="service-price">
+            <div class="price-tag">Custom<span> pricing</span></div>
+            <a href="#" class="btn-blue" onclick="showPage('contact')">Get Quote →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD-ONS -->
+  <div class="section-full">
+    <div class="section-full-inner fade-up">
+      <div class="section-tag">Add-On Services</div>
+      <h2 class="section-title">Extend Your <em>IoT Platform</em></h2>
+      <div class="features-grid">
+        <div class="feature-card fade-up"><div class="feature-icon">📱</div><h3>Mobile App Development</h3><p>Custom iOS and Android apps giving field teams live access to sensor data, alerts, and control interfaces on the go.</p></div>
+        <div class="feature-card fade-up"><div class="feature-icon">🔗</div><h3>ERP / CMMS Integration</h3><p>Connect your IoT data to SAP, Oracle, or Maximo maintenance management systems for seamless operational workflows.</p></div>
+        <div class="feature-card fade-up"><div class="feature-icon">📋</div><h3>Compliance Reporting</h3><p>Automated regulatory reports for ISO 50001, ISO 14001, and South African environmental and energy compliance standards.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <h2>Not Sure Which Solution Fits?</h2>
+    <p>Our consultants will assess your operations and recommend the optimal IoT architecture — at no charge.</p>
+    <div class="cta-banner-btns">
+      <a href="#" class="btn-primary" onclick="showPage('contact')">Book Free Assessment →</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="/mnt/user-data/uploads/cropped-kamikaze-innovations-icon.png" alt="Logo"><p>End-to-end IoT solutions for the modern enterprise.</p></div>
+        <div class="footer-col"><h4>Solutions</h4><ul><li><a href="#" onclick="showPage('services')">Industrial IoT</a></li><li><a href="#" onclick="showPage('services')">Smart Buildings</a></li><li><a href="#" onclick="showPage('services')">Fleet Tracking</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="#" onclick="showPage('about')">About</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul><li><a href="#">+27 21 555 0192</a></li><li><a href="#">info@kamikazeinnovations.co.za</a></li><li><a href="#">Cape Town, SA</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 Kamikaze Innovations (Pty) Ltd.</span></div>
+    </div>
+  </footer>
+
+</div><!-- end services -->
+
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║              BLOG PAGE              ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<div id="page-blog" class="page">
+
+  <div class="services-hero">
+    <div class="section-tag" style="justify-content:center;color:#7dd3fc;">Insights & Updates</div>
+    <h1>The Kamikaze IoT Blog</h1>
+    <p>Industry insights, technical deep-dives, case studies, and the latest news in connected technology.</p>
+  </div>
+
+  <div class="section fade-up">
+    <div class="section-tag">Latest Articles</div>
+    <h2 class="section-title">Fresh From Our <em>Lab</em></h2>
+
+    <div class="blog-grid">
+      <div class="blog-card fade-up">
+        <div class="blog-img blog-img-1">📡</div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-tag">Industrial IoT</span><span class="blog-date">April 14, 2025</span></div>
+          <h3>How Predictive Maintenance Saved One Factory R2.4M in Unplanned Downtime</h3>
+          <p>A deep dive into our 6-month deployment at a Gauteng auto parts manufacturer — the sensors, models, and ROI breakdown.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="blog-author"><div class="blog-author-img">👨‍🔬</div><span>Ruan van der Berg</span></div>
+            <a class="read-more" href="#">Read more →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card fade-up">
+        <div class="blog-img blog-img-2">⚡</div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-tag">Energy</span><span class="blog-date">March 28, 2025</span></div>
+          <h3>Load Shedding Resilience: IoT Strategies for South African Businesses in 2025</h3>
+          <p>Practical IoT approaches to manage load shedding impact — from smart battery switching to demand forecasting using real-time data.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="blog-author"><div class="blog-author-img">👩‍💻</div><span>Dr. Zanele Mokoena</span></div>
+            <a class="read-more" href="#">Read more →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card fade-up">
+        <div class="blog-img blog-img-3">🔒</div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-tag">Security</span><span class="blog-date">March 10, 2025</span></div>
+          <h3>Zero-Trust IoT: Why Your Factory Floor is Your Biggest Cybersecurity Risk</h3>
+          <p>An analysis of 2024's most significant OT/IoT breaches and the architecture decisions that could have prevented every single one.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="blog-author"><div class="blog-author-img">👩‍🔒</div><span>Fatima Essop</span></div>
+            <a class="read-more" href="#">Read more →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card fade-up">
+        <div class="blog-img blog-img-4">🌐</div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-tag">Connectivity</span><span class="blog-date">February 22, 2025</span></div>
+          <h3>LoRaWAN vs NB-IoT vs LTE-M: Choosing the Right Network for Your Deployment</h3>
+          <p>A comprehensive technical comparison of low-power wide-area network technologies with real-world range, cost, and latency data from our field tests.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="blog-author"><div class="blog-author-img">👨‍🔧</div><span>Ruan van der Berg</span></div>
+            <a class="read-more" href="#">Read more →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card fade-up">
+        <div class="blog-img blog-img-5">🤖</div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-tag">AI & ML</span><span class="blog-date">February 5, 2025</span></div>
+          <h3>Edge AI: Running Machine Learning Models Directly on IoT Devices in 2025</h3>
+          <p>How TinyML and edge inference are eliminating cloud latency and enabling real-time decisions at the point of sensing — with benchmarks and code examples.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="blog-author"><div class="blog-author-img">👩‍🔬</div><span>Dr. Zanele Mokoena</span></div>
+            <a class="read-more" href="#">Read more →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card fade-up">
+        <div class="blog-img blog-img-6">🌾</div>
+        <div class="blog-body">
+          <div class="blog-meta"><span class="blog-tag">AgriTech</span><span class="blog-date">January 18, 2025</span></div>
+          <h3>Smart Irrigation in the Western Cape: How a Winery Saved 34% on Water Costs</h3>
+          <p>A case study on our soil moisture sensor network and automated drip irrigation deployment across a 450-hectare Stellenbosch wine estate.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="blog-author"><div class="blog-author-img">👨‍💼</div><span>Andile Khumalo</span></div>
+            <a class="read-more" href="#">Read more →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="section-full">
+    <div class="section-full-inner" style="text-align:center;">
+      <div class="section-tag" style="justify-content:center;">Newsletter</div>
+      <h2 class="section-title">Stay <em>Connected</em></h2>
+      <p class="section-subtitle" style="margin:0 auto 32px;">Get our latest IoT insights, case studies and industry news delivered to your inbox every two weeks.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:500px;margin:0 auto;">
+        <input type="email" placeholder="Enter your email address" style="flex:1;padding:14px 18px;border-radius:10px;border:1.5px solid var(--border);font-family:'Exo 2',sans-serif;font-size:0.9rem;outline:none;min-width:240px;background:white;">
+        <button class="btn-blue" onclick="showToast('🎉 You\'re subscribed! Welcome aboard.')">Subscribe →</button>
+      </div>
+      <p style="font-size:0.75rem;color:#4a6a8c;margin-top:12px;">No spam. Unsubscribe anytime. We respect your privacy.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="/mnt/user-data/uploads/cropped-kamikaze-innovations-icon.png" alt="Logo"><p>Sharing knowledge at the frontier of connected technology.</p></div>
+        <div class="footer-col"><h4>Categories</h4><ul><li><a href="#">Industrial IoT</a></li><li><a href="#">Smart Buildings</a></li><li><a href="#">Cybersecurity</a></li><li><a href="#">AI & Analytics</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="#" onclick="showPage('about')">About</a></li><li><a href="#" onclick="showPage('services')">Services</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Social</h4><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Twitter / X</a></li><li><a href="#">YouTube</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 Kamikaze Innovations (Pty) Ltd.</span></div>
+    </div>
+  </footer>
+
+</div><!-- end blog -->
+
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║           CONTACT PAGE              ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<div id="page-contact" class="page">
+
+  <div class="services-hero">
+    <div class="section-tag" style="justify-content:center;color:#7dd3fc;">Get In Touch</div>
+    <h1>Let's Build Something Connected</h1>
+    <p>Whether you're ready to deploy or just exploring IoT possibilities — we're here to help. Our consultants respond within 24 hours.</p>
+  </div>
+
+  <div class="section fade-up">
+    <div class="contact-layout">
+      <div class="contact-info">
+        <div class="section-tag">Contact Details</div>
+        <h2 class="section-title" style="font-size:1.8rem;">Reach Our <em>Team</em></h2>
+        <p style="font-size:0.9rem;color:#4a6a8c;line-height:1.7;margin:16px 0 32px;">We're based in Cape Town but support clients across South Africa and Sub-Saharan Africa. Remote consultations available worldwide.</p>
+
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div><h4>Head Office</h4><p>15 Quantum Park, Century City</p><small>Cape Town, 7441, South Africa</small></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div><h4>Phone</h4><p>+27 (0)21 555 0192</p><small>Mon–Fri, 08:00–17:00 SAST</small></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div><h4>Email</h4><p>info@kamikazeinnovations.co.za</p><small>Response within 24 business hours</small></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🚨</div>
+          <div><h4>24/7 Support Hotline</h4><p>+27 (0)87 555 9900</p><small>For existing clients — system emergencies only</small></div>
+        </div>
+
+        <div class="map-placeholder">🗺️</div>
+      </div>
+
+      <div class="contact-form fade-up">
+        <h3>Send Us a Message</h3>
+        <div class="form-row">
+          <div class="form-group"><label>First Name *</label><input type="text" placeholder="Thabo"></div>
+          <div class="form-group"><label>Last Name *</label><input type="text" placeholder="Sithole"></div>
+        </div>
+        <div class="form-group"><label>Company *</label><input type="text" placeholder="Acme Manufacturing (Pty) Ltd"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Email Address *</label><input type="email" placeholder="thabo@company.co.za"></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+27 82 000 0000"></div>
+        </div>
+        <div class="form-group">
+          <label>Service of Interest</label>
+          <select>
+            <option value="">— Select a service —</option>
+            <option>Industrial IoT / Predictive Maintenance</option>
+            <option>Smart Building Management</option>
+            <option>Fleet & Asset Tracking</option>
+            <option>Energy Management</option>
+            <option>Smart Agriculture</option>
+            <option>Healthcare IoT</option>
+            <option>Custom IoT Development</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>How Can We Help? *</label>
+          <textarea placeholder="Tell us about your project, challenges, or questions. The more detail you provide, the better we can prepare for our conversation..."></textarea>
+        </div>
+        <div class="form-group" style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="consent" style="width:auto;min-width:0;flex-shrink:0;">
+          <label for="consent" style="margin:0;font-weight:400;font-size:0.8rem;color:#4a6a8c;cursor:pointer;">I agree to Kamikaze Innovations processing my data in accordance with the <a href="#" style="color:var(--blue);">Privacy Policy</a> and POPIA.</label>
+        </div>
+        <button class="form-submit" onclick="showToast('✅ Message sent! We\'ll be in touch within 24 hours.')">Send Message →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-full">
+    <div class="section-full-inner fade-up">
+      <div class="section-tag">FAQ</div>
+      <h2 class="section-title">Common <em>Questions</em></h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px;">
+        <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:28px;">
+          <h4 style="color:var(--blue-dark);margin-bottom:10px;">How long does a typical IoT deployment take?</h4>
+          <p style="font-size:0.88rem;color:#4a6a8c;line-height:1.7;">Small deployments (under 50 devices) typically go live in 4–6 weeks. Large enterprise projects run 3–6 months including integration and staff training.</p>
+        </div>
+        <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:28px;">
+          <h4 style="color:var(--blue-dark);margin-bottom:10px;">Do you provide hardware, or just software?</h4>
+          <p style="font-size:0.88rem;color:#4a6a8c;line-height:1.7;">We're a full-stack IoT provider — we source, configure, and install hardware, build the data platform, and provide ongoing managed services.</p>
+        </div>
+        <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:28px;">
+          <h4 style="color:var(--blue-dark);margin-bottom:10px;">Can you integrate with our existing systems?</h4>
+          <p style="font-size:0.88rem;color:#4a6a8c;line-height:1.7;">Yes. We integrate with most major ERP, CMMS, BMS, and cloud platforms via REST APIs, MQTT, OPC-UA, or custom connectors.</p>
+        </div>
+        <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:28px;">
+          <h4 style="color:var(--blue-dark);margin-bottom:10px;">What happens if sensors go offline or fail?</h4>
+          <p style="font-size:0.88rem;color:#4a6a8c;line-height:1.7;">Our platform detects device failures instantly and triggers alerts. We offer 4-hour on-site response SLAs for critical systems and remote diagnostics 24/7.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="/mnt/user-data/uploads/cropped-kamikaze-innovations-icon.png" alt="Logo"><p>We're always happy to talk IoT. Reach out anytime.</p></div>
+        <div class="footer-col"><h4>Solutions</h4><ul><li><a href="#" onclick="showPage('services')">Industrial IoT</a></li><li><a href="#" onclick="showPage('services')">Smart Buildings</a></li><li><a href="#" onclick="showPage('services')">Fleet Tracking</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="#" onclick="showPage('about')">About</a></li><li><a href="#" onclick="showPage('blog')">Blog</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Legal</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 Kamikaze Innovations (Pty) Ltd.</span></div>
+    </div>
+  </footer>
+
+</div><!-- end contact -->
+
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Done!</div>
+
+<script>
+// ─── PAGE NAVIGATION ───
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+
+  // update nav links
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById('nav-' + id);
+  if (el) el.classList.add('active');
+
+  document.querySelectorAll('.mobile-menu a').forEach(a => a.classList.remove('active'));
+  const mel = document.getElementById('mnav-' + id);
+  if (mel) mel.classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(initFadeAnimations, 100);
+}
+
+// ─── MOBILE MENU ───
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('open');
+}
+
+// ─── SCROLL ANIMATIONS ───
+function initFadeAnimations() {
+  const elements = document.querySelectorAll('.fade-up:not(.visible)');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  elements.forEach(el => observer.observe(el));
+}
+
+// ─── NAVBAR SCROLL ───
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ─── TOAST ───
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ─── DEVICE CARD LIVE VALUES ───
+function randomize() {
+  const cards = document.querySelectorAll('.device-card .value');
+  if (cards.length >= 4) {
+    const temp = (22 + Math.random() * 4).toFixed(1);
+    const hum = Math.round(60 + Math.random() * 15);
+    const power = (3.8 + Math.random() * 1.2).toFixed(1);
+    cards[0].textContent = temp + '°C';
+    cards[1].textContent = hum + '%';
+    cards[2].textContent = power + 'kW';
+  }
+}
+setInterval(randomize, 2500);
+
+// ─── INIT ───
+document.addEventListener('DOMContentLoaded', () => {
+  initFadeAnimations();
+});
+</script>
+</body>
+</html>
